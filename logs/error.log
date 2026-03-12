@@ -1,0 +1,31 @@
+2026-03-12 20:19:42 [error]: MongoDB connection failed: bad auth : authentication failed
+2026-03-12 20:20:06 [error]: MongoDB connection failed: bad auth : authentication failed
+2026-03-12 20:20:59 [error]: MongoDB connection failed: bad auth : authentication failed
+2026-03-12 20:21:50 [error]: MongoDB connection failed: bad auth : authentication failed
+2026-03-12 20:22:32 [error]: MongoDB connection failed: bad auth : authentication failed
+2026-03-12 20:22:49 [error]: MongoDB connection failed: bad auth : authentication failed
+2026-03-12 20:22:54 [error]: MongoDB connection failed: bad auth : authentication failed
+2026-03-12 20:24:11 [error]: MongoDB connection failed: bad auth : Authentication failed.
+2026-03-12 21:10:23 [error]: [POST] /api/auth/register — next is not a function
+2026-03-12 21:12:39 [error]: [POST] /api/auth/register — next is not a function
+2026-03-12 21:16:18 [error]: [POST] /api/auth/register — next is not a function
+2026-03-12 21:18:01 [error]: [POST] /api/auth/register — next is not a function
+2026-03-12 21:25:31 [error]: [POST] /api/auth/register — next is not a function
+2026-03-12 21:25:53 [error]: [POST] /api/auth/register — next is not a function
+2026-03-12 21:25:54 [error]: [POST] /api/auth/register — next is not a function
+2026-03-12 21:28:27 [error]: [POST] /api/auth/register — TypeError: next is not a function
+    at model.<anonymous> (file:///C:/Users/bisha/VoiceEcho/models/User.js:40:3)
+    at async Kareem.execPre (C:\Users\bisha\VoiceEcho\node_modules\kareem\index.js:70:24)
+    at async model.$__save (C:\Users\bisha\VoiceEcho\node_modules\mongoose\lib\model.js:371:5)
+    at async model.save (C:\Users\bisha\VoiceEcho\node_modules\mongoose\lib\model.js:614:5)
+    at async C:\Users\bisha\VoiceEcho\node_modules\mongoose\lib\model.js:2750:9
+    at async Promise.all (index 0)
+    at async Function.create (C:\Users\bisha\VoiceEcho\node_modules\mongoose\lib\model.js:2735:11)
+    at async file:///C:/Users/bisha/VoiceEcho/controllers/authController.js:38:16
+2026-03-12 22:03:52 [error]: [AI Advice] Generation failed: OpenAI API error: 401
+2026-03-12 22:07:43 [error]: [AI Advice] Generation failed: OpenAI API error: 429
+2026-03-12 22:42:53 [error]: Uncaught Exception: EPIPE: broken pipe, write
+2026-03-12 22:46:45 [error]: [AI Advice] Generation failed: {"error":{"code":503,"message":"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.","status":"UNAVAILABLE"}}
+2026-03-12 22:59:11 [error]: [AI Advice] Generation failed: {"error":{"code":404,"message":"models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.","status":"NOT_FOUND"}}
+2026-03-12 22:59:26 [error]: [AI Advice] Generation failed: {"error":{"code":404,"message":"models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.","status":"NOT_FOUND"}}
+2026-03-12 23:00:25 [error]: [AI Advice] Generation failed: {"error":{"code":404,"message":"models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.","status":"NOT_FOUND"}}

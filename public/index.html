@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoiceEcho — AI Voice Mood Analytics</title>
+  <meta name="description" content="VoiceEcho is an AI-powered voice mood analytics platform. Track your emotional wellness through voice and text journal entries." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════ AUTH OVERLAY ═══════════════════════ -->
+<div id="auth-overlay" class="auth-overlay">
+  <div class="auth-bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-icon">🎙️</div>
+      <h1 class="logo-text">VoiceEcho</h1>
+      <p class="logo-sub">AI Voice Mood Analytics</p>
+    </div>
+
+    <!-- Login -->
+    <form id="login-form" class="auth-form active" novalidate>
+      <h2 class="form-title">Welcome back</h2>
+      <div class="form-group">
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" placeholder="you@example.com" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <div id="login-error" class="form-error hidden"></div>
+      <button type="submit" class="btn btn-primary btn-full" id="login-btn">
+        <span class="btn-text">Sign In</span>
+        <span class="btn-loader hidden"></span>
+      </button>
+      <p class="form-switch">Don't have an account? <a href="#" id="goto-register">Register</a></p>
+    </form>
+
+    <!-- Register -->
+    <form id="register-form" class="auth-form" novalidate>
+      <h2 class="form-title">Create account</h2>
+      <div class="form-group">
+        <label for="reg-name">Full Name</label>
+        <input id="reg-name" type="text" placeholder="Alex Johnson" autocomplete="name" />
+      </div>
+      <div class="form-group">
+        <label for="reg-email">Email</label>
+        <input id="reg-email" type="email" placeholder="you@example.com" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label for="reg-password">Password <span class="hint">(min 8 chars)</span></label>
+        <input id="reg-password" type="password" placeholder="••••••••" autocomplete="new-password" />
+      </div>
+      <div id="register-error" class="form-error hidden"></div>
+      <button type="submit" class="btn btn-primary btn-full" id="register-btn">
+        <span class="btn-text">Create Account</span>
+        <span class="btn-loader hidden"></span>
+      </button>
+      <p class="form-switch">Already have an account? <a href="#" id="goto-login">Sign In</a></p>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════ MAIN APP ═══════════════════════════ -->
+<div id="main-app" class="main-app hidden">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-compact">
+        <span class="logo-icon-sm">🎙️</span>
+        <span class="logo-name">VoiceEcho</span>
+      </div>
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+        <span>‹</span>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#dashboard" class="nav-link active" data-page="dashboard" id="nav-dashboard">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="#journal" class="nav-link" data-page="journal" id="nav-journal">
+        <span class="nav-icon">📓</span>
+        <span class="nav-label">Journal</span>
+      </a>
+      <a href="#record" class="nav-link" data-page="record" id="nav-record">
+        <span class="nav-icon">🎤</span>
+        <span class="nav-label">Record</span>
+      </a>
+      <a href="#analytics" class="nav-link" data-page="analytics" id="nav-analytics">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Analytics</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-chip" id="user-chip">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <div class="user-info">
+          <span class="user-name" id="user-name-display">Loading…</span>
+          <span class="user-role">Pro User</span>
+        </div>
+      </div>
+      <button class="btn-icon logout-btn" id="logout-btn" title="Logout">⏻</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content" id="content">
+
+    <!-- ── DASHBOARD PAGE ── -->
+    <section id="page-dashboard" class="page active">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-subtitle" id="dashboard-greeting">Good evening! How are you feeling today?</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="dash-new-entry">+ New Entry</button>
+        </div>
+      </div>
+
+      <!-- Burnout Banner -->
+      <div id="burnout-banner" class="burnout-banner hidden">
+        <div class="burnout-icon">⚠️</div>
+        <div class="burnout-content">
+          <strong>Burnout Alert</strong>
+          <p>You've had several consecutive negative mood entries. Consider taking a break or speaking with someone you trust.</p>
+          <p class="disclaimer">This is not a medical diagnosis. Please consult a healthcare professional if you are experiencing distress.</p>
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-grid" id="dashboard-stats">
+        <div class="stat-card">
+          <div class="stat-icon">📝</div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-total">—</span>
+            <span class="stat-label">Total Entries</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">😊</div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-avg-mood">—</span>
+            <span class="stat-label">Avg Mood (7d)</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-streak">—</span>
+            <span class="stat-label">Day Streak</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-neg-streak">—</span>
+            <span class="stat-label">Neg. Streak</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mini Chart -->
+      <div class="card chart-card">
+        <div class="card-header">
+          <h3>Mood This Week</h3>
+        </div>
+        <div class="chart-container">
+          <canvas id="dashboard-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Recent Entries -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Recent Entries</h3>
+          <a href="#journal" class="link" id="see-all-link">See all →</a>
+        </div>
+        <div id="recent-entries-list" class="entries-list">
+          <div class="empty-state">No entries yet. Record your first mood!</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── JOURNAL PAGE ── -->
+    <section id="page-journal" class="page">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Journal</h1>
+          <p class="page-subtitle">Your mood history & insights</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="j-new-text-btn">+ Text Entry</button>
+          <button class="btn btn-secondary" id="j-new-audio-btn">🎤 Record</button>
+        </div>
+      </div>
+
+      <!-- Text Entry Form -->
+      <div id="text-entry-panel" class="card entry-form-card hidden">
+        <div class="card-header">
+          <h3>New Text Entry</h3>
+          <button class="btn-icon close-panel" id="close-text-panel">✕</button>
+        </div>
+        <textarea id="text-entry-input" placeholder="How are you feeling right now? Write freely…" maxlength="5000" rows="5"></textarea>
+        <div class="entry-form-footer">
+          <div class="char-count"><span id="char-count">0</span>/5000</div>
+          <label class="toggle-label">
+            <input type="checkbox" id="text-include-advice" />
+            <span class="toggle-switch"></span>
+            Include AI advice
+          </label>
+          <button class="btn btn-primary" id="submit-text-entry">Submit</button>
+        </div>
+        <div id="text-entry-error" class="form-error hidden"></div>
+      </div>
+
+      <!-- Journal Entries -->
+      <div id="journal-entries-list" class="entries-list">
+        <div class="empty-state">Loading entries…</div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="journal-pagination">
+        <button class="btn btn-secondary btn-sm" id="j-prev-btn" disabled>← Prev</button>
+        <span id="j-page-info">Page 1</span>
+        <button class="btn btn-secondary btn-sm" id="j-next-btn" disabled>Next →</button>
+      </div>
+    </section>
+
+    <!-- ── RECORD PAGE ── -->
+    <section id="page-record" class="page">
+      <div class="page-header">
+        <h1 class="page-title">Voice Journal</h1>
+        <p class="page-subtitle">Speak your mind — AI will analyse your mood</p>
+      </div>
+
+      <div class="record-center">
+        <div class="recorder-card card">
+          <!-- Visualizer -->
+          <div class="visualizer" id="visualizer">
+            <canvas id="audio-visualizer"></canvas>
+            <div class="visualizer-idle">
+              <div class="mic-pulse">
+                <span class="mic-emoji">🎙️</span>
+              </div>
+              <p>Press Record to start</p>
+            </div>
+          </div>
+
+          <!-- Timer -->
+          <div class="record-timer" id="record-timer">00:00</div>
+
+          <!-- Controls -->
+          <div class="record-controls">
+            <button class="btn btn-record" id="record-btn">
+              <span class="record-dot"></span> Record
+            </button>
+            <button class="btn btn-stop hidden" id="stop-btn">⏹ Stop</button>
+            <button class="btn btn-secondary hidden" id="cancel-record-btn">✕ Cancel</button>
+          </div>
+
+          <!-- Audio Preview -->
+          <div id="audio-preview" class="audio-preview hidden">
+            <audio controls id="audio-playback"></audio>
+            <div class="preview-actions">
+              <label class="toggle-label">
+                <input type="checkbox" id="audio-include-advice" />
+                <span class="toggle-switch"></span>
+                Include AI advice
+              </label>
+              <button class="btn btn-secondary" id="re-record-btn">↩ Re-record</button>
+              <button class="btn btn-primary" id="submit-audio-btn">
+                <span class="btn-text">Analyse & Save</span>
+                <span class="btn-loader hidden"></span>
+              </button>
+            </div>
+          </div>
+
+          <div id="record-status" class="record-status"></div>
+        </div>
+
+        <!-- Result Card -->
+        <div id="record-result" class="card result-card hidden">
+          <h3>Analysis Complete ✨</h3>
+          <div class="result-body">
+            <div class="result-mood" id="r-mood-badge"></div>
+            <div class="result-score-wrap">
+              <canvas id="result-gauge" width="120" height="120"></canvas>
+            </div>
+          </div>
+          <div class="result-transcript">
+            <h4>Transcript</h4>
+            <p id="r-transcript"></p>
+          </div>
+          <div id="r-advice-section" class="result-advice hidden">
+            <h4>AI Advice 💡</h4>
+            <p id="r-advice"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ANALYTICS PAGE ── -->
+    <section id="page-analytics" class="page">
+      <div class="page-header">
+        <h1 class="page-title">Analytics</h1>
+        <p class="page-subtitle">Insights into your emotional wellness journey</p>
+      </div>
+
+      <!-- Burnout Status Card -->
+      <div class="card burnout-card" id="analytics-burnout-card">
+        <div class="card-header">
+          <h3>Burnout Status</h3>
+        </div>
+        <div id="burnout-status-content" class="burnout-status-body">
+          <div class="loading-spinner"></div>
+        </div>
+      </div>
+
+      <!-- Weekly Section -->
+      <div class="analytics-grid">
+        <div class="card">
+          <div class="card-header"><h3>Weekly Mood Trend</h3></div>
+          <div class="chart-container">
+            <canvas id="weekly-line-chart"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Mood Distribution</h3></div>
+          <div class="chart-container chart-container--sm">
+            <canvas id="mood-doughnut-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- All-Time Section -->
+      <div class="card">
+        <div class="card-header"><h3>All-Time Monthly Trend</h3></div>
+        <div class="chart-container chart-container--tall">
+          <canvas id="alltime-bar-chart"></canvas>
+        </div>
+      </div>
+
+      <p class="disclaimer-text">⚠️ VoiceEcho is not a medical diagnosis tool. Always consult a healthcare professional if you are experiencing distress.</p>
+    </section>
+
+  </main>
+</div>
+
+<script type="module" src="/js/api.js"></script>
+<script type="module" src="/js/auth.js"></script>
+<script type="module" src="/js/journal.js"></script>
+<script type="module" src="/js/analytics.js"></script>
+<script type="module" src="/js/app.js"></script>
+</body>
+</html>

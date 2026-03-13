@@ -29,3 +29,32 @@
 2026-03-12 22:59:11 [error]: [AI Advice] Generation failed: {"error":{"code":404,"message":"models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.","status":"NOT_FOUND"}}
 2026-03-12 22:59:26 [error]: [AI Advice] Generation failed: {"error":{"code":404,"message":"models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.","status":"NOT_FOUND"}}
 2026-03-12 23:00:25 [error]: [AI Advice] Generation failed: {"error":{"code":404,"message":"models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.","status":"NOT_FOUND"}}
+2026-03-13 01:00:47 [error]: [AI Advice] Generation failed: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-13 01:06:23 [error]: [AI Advice] Generation failed: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent: [404 Not Found] models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-13 01:12:14 [error]: [AI Advice] Generation failed: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-13 01:14:31 [error]: [POST] /api/journal/text — ReferenceError: genAI is not defined
+    at generateAdvice (file:///C:/Users/bisha/VoiceEcho/services/aiAdviceService.js:11:18)
+    at processEntry (file:///C:/Users/bisha/VoiceEcho/controllers/journalController.js:36:42)
+    at file:///C:/Users/bisha/VoiceEcho/controllers/journalController.js:73:36
+    at file:///C:/Users/bisha/VoiceEcho/utils/asyncHandler.js:2:19
+    at Layer.handleRequest (C:\Users\bisha\VoiceEcho\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\bisha\VoiceEcho\node_modules\router\lib\route.js:157:13)
+    at validate (file:///C:/Users/bisha/VoiceEcho/middlewares/validate.js:21:3)
+    at Layer.handleRequest (C:\Users\bisha\VoiceEcho\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\bisha\VoiceEcho\node_modules\router\lib\route.js:157:13)
+    at file:///C:/Users/bisha/VoiceEcho/middlewares/validate.js:13:3
+2026-03-13 01:15:00 [error]: [AI Advice] Generation failed: genAI.listModels is not a function
+2026-03-13 08:22:14 [error]: [AI Advice] Generation failed: genAI.listModels is not a function
+2026-03-13 08:37:40 [error]: [AI Advice] Generation failed: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-13 09:22:38 [error]: [Transcription] Failed: Groq Whisper API 403: {"error":{"message":"The model `whisper-large-v3` is blocked at the project level. Please have a project admin enable this model in the project settings at https://console.groq.com/settings/project/limits","type":"permissions_error","code":"model_permission_blocked_project"}}
+
+2026-03-13 09:22:38 [error]: [POST] /api/journal/audio — Error: Transcription service unavailable. Please try again later.
+    at transcribeAudio (file:///C:/Users/bisha/VoiceEcho/services/transcriptionService.js:53:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/bisha/VoiceEcho/controllers/journalController.js:61:24
+2026-03-13 09:22:41 [error]: [Transcription] Failed: Groq Whisper API 403: {"error":{"message":"The model `whisper-large-v3` is blocked at the project level. Please have a project admin enable this model in the project settings at https://console.groq.com/settings/project/limits","type":"permissions_error","code":"model_permission_blocked_project"}}
+
+2026-03-13 09:22:41 [error]: [POST] /api/journal/audio — Error: Transcription service unavailable. Please try again later.
+    at transcribeAudio (file:///C:/Users/bisha/VoiceEcho/services/transcriptionService.js:53:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/bisha/VoiceEcho/controllers/journalController.js:61:24

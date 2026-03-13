@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google/genai": "^1.44.0",
+    "@google/generative-ai": "^0.24.1",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
@@ -27,6 +27,7 @@
     "morgan": "^1.10.1",
     "multer": "^1.4.5-lts.1",
     "node-fetch": "^3.3.2",
+    "openai": "^6.27.0",
     "sentiment": "^5.0.2",
     "uuid": "^11.0.5",
     "winston": "^3.17.0"

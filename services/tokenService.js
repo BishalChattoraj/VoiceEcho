@@ -52,7 +52,7 @@ export const rotateRefreshToken = async (oldToken, userAgent = null, ipAddress =
 };
 
 export const revokeRefreshToken = async (token) => {
-  await RefreshToken.findOneAndUpdate({ token }, { revoked: true });
+  await RefreshToken.findOneAndUpdate({ token }, { revoked: true }, { returnDocument: 'after' });
 };
 
 export const revokeAllUserTokens = async (userId) => {

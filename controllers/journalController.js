@@ -103,7 +103,7 @@ export const updateEntry = asyncHandler(async (req, res) => {
   const entry = await JournalEntry.findOneAndUpdate(
     { _id: req.params.id, user: req.userId },
     { userNote: req.body.userNote },
-    { new: true, runValidators: true }
+    { returnDocument: 'after', runValidators: true }
   );
   if (!entry) return sendError(res, 404, 'Journal entry not found');
   return sendSuccess(res, 200, 'Entry updated', { entry });
